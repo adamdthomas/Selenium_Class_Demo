@@ -9,12 +9,14 @@ namespace UnitTestProject1.pages
     public class CustomerPage
     {
         WebDriverWait wait;
+        IWebDriver driver;
 
         public CustomerPage(IWebDriver driver)
         {
             PageFactory.InitElements(driver, this);
             driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(60));
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            this.driver = driver;
         }
 
         [FindsBy(How = How.Id, Using = "firstName")] public IWebElement firstNameEdit { get; set; }
@@ -74,9 +76,12 @@ namespace UnitTestProject1.pages
             dobMonthEdit.SendKeys("01");
             dobDayEdit.SendKeys("01");
             dobYearEdit.SendKeys("1980");
-            System.Threading.Thread.Sleep(2000);
+            
+            effectiveDateEdit.Clear();
+
+            //System.Threading.Thread.Sleep(1000);
             effectiveDateEdit.SendKeys(TodaysDate);
-            System.Threading.Thread.Sleep(2000);
+           // System.Threading.Thread.Sleep(2000);
             nextBtn.Click();
 
             try

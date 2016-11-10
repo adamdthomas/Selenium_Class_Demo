@@ -50,8 +50,27 @@ namespace UnitTestProject1.pages
         [FindsBy(How = How.XPath, Using = "//*[@id='vehicleForm']/div[1]/div[17]/div[1]/div[2]/div/div/div/label[3]")] public IWebElement Business { get; set; }
         [FindsBy(How = How.Id, Using = "btnSubmit")] public IWebElement Submit { get; set; }
 
-        public void FillOutForm(string Year, string Make, string Model, string BodyType, FinanceType FinanceType, Use Use)
+        //Commute
+        [FindsBy(How = How.Id, Using = "daysDriven")]
+        public IWebElement daysDriven { get; set; }
+        [FindsBy(How = How.Id, Using = "milesDriven")]
+        public IWebElement milesDriven { get; set; }
+
+        //Business
+        [FindsBy(How = How.Id, Using = "typeOfBusinessUse")]
+        public IWebElement typeOfBusiness { get; set; }
+
+        //All
+        [FindsBy(How = How.Id, Using = "annualMileage")]
+        public IWebElement annualMileage { get; set; }
+
+
+
+        public bool FillOutForm(string Year, string Make, string Model, string BodyType, FinanceType FinanceType, Use Use)
         {
+            bool driverInfoPageExist;
+
+
             SelectElement sltYear = new SelectElement(yearDrpDwn);
             sltYear.SelectByText("2007");
             System.Threading.Thread.Sleep(1500);
@@ -84,16 +103,35 @@ namespace UnitTestProject1.pages
                     break;
             }
 
+            SelectElement annualMileageSlt;
+            SelectElement daysDrivenSlt;
+            SelectElement businessUseSlt;
+
+
             switch (Use)
             {
                 case Use.Commute:
                     Commute.Click();
+
+                    daysDrivenSlt = new SelectElement(daysDriven);
+
+                    daysDrivenSlt.SelectByText("5");
+                    milesDriven.SendKeys("15");
+
+                    annualMileageSlt = new SelectElement(annualMileage);
+                    annualMileageSlt.SelectByText("12,001 - 15,000");
                     break;
                 case Use.Pleasure:
                     Pleasure.Click();
+                    annualMileageSlt = new SelectElement(annualMileage);
+                    annualMileageSlt.SelectByText("12,001 - 15,000");
                     break;
                 case Use.Business:
                     Business.Click();
+                    businessUseSlt = new SelectElement(typeOfBusiness);
+                    businessUseSlt.SelectByText("Clergy");
+                    annualMileageSlt = new SelectElement(annualMileage);
+                    annualMileageSlt.SelectByText("12,001 - 15,000");
                     break;
                 default:
                     break;
@@ -102,14 +140,22 @@ namespace UnitTestProject1.pages
 
             Submit.Click();
 
-            
 
+            try
+            {
+                wait.Until(ExpectedConditions.ElementExists(By.Id("maritalStatus")));
+                driverInfoPageExist = true;
+            }
+            catch (Exception e)
+            {
+                driverInfoPageExist = false;
+            }
 
             //IWebElement radioBtnOwnership = this.RbOwned;
             //IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             //executor.ExecuteScript("arguments[0].click();", radioBtnOwnership);
 
-
+            return driverInfoPageExist;
 
         }
 

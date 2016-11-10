@@ -44,11 +44,7 @@ namespace UnitTestProject1
         //[Test]
         public void MyFirstTest()
         {
-
-
-
-
-
+            
             //IWebElement overrideLink = driver.FindElement(By.Id("overridelink"));
             //overrideLink.Click();
 
@@ -61,10 +57,7 @@ namespace UnitTestProject1
             //IWebElement year = driver.FindElement(By.Id("date-yeardob"));
             //IWebElement effectiveDate = driver.FindElement(By.Id("effectiveDate"));
             //IWebElement next = driver.FindElement(By.Id("btnSubmit"));
-
-
-
-
+            
             //overridelink
 
             //System.Threading.Thread.Sleep(10000);
@@ -118,8 +111,8 @@ namespace UnitTestProject1
 
 
             customer.FillOutForm();
-            vehicle.FillOutForm("2007", "Honda", "Accord", "Sedan 4 Door", VehiclePage.FinanceType.Leased, VehiclePage.Use.Commute);
-
+           bool DidItWork = vehicle.FillOutForm("2007", "Honda", "Accord", "Sedan 4 Door", VehiclePage.FinanceType.Owned, VehiclePage.Use.Commute);
+            Assert.IsTrue(DidItWork);
 
         }
 
