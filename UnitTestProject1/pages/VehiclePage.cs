@@ -14,6 +14,7 @@ namespace UnitTestProject1.pages
 
         WebDriverWait wait;
         IWebDriver driver;
+        public List<string> dayStrings;
 
         public enum FinanceType
         {
@@ -49,27 +50,16 @@ namespace UnitTestProject1.pages
         [FindsBy(How = How.XPath, Using = "//*[@id='vehicleForm']/div[1]/div[17]/div[1]/div[2]/div/div/div/label[2]")] public IWebElement Pleasure { get; set; }
         [FindsBy(How = How.XPath, Using = "//*[@id='vehicleForm']/div[1]/div[17]/div[1]/div[2]/div/div/div/label[3]")] public IWebElement Business { get; set; }
         [FindsBy(How = How.Id, Using = "btnSubmit")] public IWebElement Submit { get; set; }
-
-        //Commute
-        [FindsBy(How = How.Name, Using = "daysDriven")]
-        public IWebElement daysDriven { get; set; }
-
-
-        [FindsBy(How = How.Id, Using = "milesDriven")]
-        public IWebElement milesDriven { get; set; }
-
-        //Business
-        [FindsBy(How = How.Id, Using = "typeOfBusinessUse")]
-        public IWebElement typeOfBusiness { get; set; }
-
-        //All
-        [FindsBy(How = How.Id, Using = "annualMileage")]
-        public IWebElement annualMileage { get; set; }
+        [FindsBy(How = How.Name, Using = "daysDriven")] public IWebElement daysDriven { get; set; }
+        [FindsBy(How = How.Id, Using = "milesDriven")] public IWebElement milesDriven { get; set; }
+        [FindsBy(How = How.Id, Using = "typeOfBusinessUse")] public IWebElement typeOfBusiness { get; set; }
+        [FindsBy(How = How.Id, Using = "annualMileage")] public IWebElement annualMileage { get; set; }
 
 
 
         public bool FillOutForm(string Year, string Make, string Model, string BodyType, FinanceType FinanceType, Use Use)
         {
+            dayStrings = new List<string>();
             bool driverInfoPageExist;
 
 
@@ -79,11 +69,11 @@ namespace UnitTestProject1.pages
 
             SelectElement sltMake = new SelectElement(makeDrpDwn);
             sltMake.SelectByText(Make);
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2000);
 
             SelectElement sltModel = new SelectElement(modelDrpDwn);
             sltModel.SelectByText(Model);
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2000);
 
             SelectElement sltBody = new SelectElement(bodyDrpDwn);
             sltBody.SelectByText(BodyType);
@@ -114,10 +104,17 @@ namespace UnitTestProject1.pages
             {
                 case Use.Commute:
                     Commute.Click();
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(3000);
 
                     daysDrivenSlt = new SelectElement(driver.FindElement(By.Id("daysDriven")));
-                    IList <IWebElement> days = daysDrivenSlt.Options;
+                    IList<IWebElement> days; days = daysDrivenSlt.Options;
+                    foreach (var day in days)
+                    {
+                        dayStrings.Add(day.GetAttribute("value").ToString());
+                    }
+
+
+
                     daysDrivenSlt.SelectByValue("5");
                     milesDriven.SendKeys("15");
 

@@ -7,6 +7,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using UnitTestProject1.pages;
 
+
 namespace UnitTestProject1
 {
     [TestFixture]
@@ -27,6 +28,7 @@ namespace UnitTestProject1
         public void Setup()
         {
             //Runs once before every test
+
             driver = new ChromeDriver();
             driver.Navigate().GoToUrl("https://auto-buy-gz-user1.geico.com/");
 
@@ -110,8 +112,22 @@ namespace UnitTestProject1
         {
 
 
-            customer.FillOutForm();
+           customer.FillOutForm();
            bool DidItWork = vehicle.FillOutForm("2007", "Honda", "Accord", "Sedan 4 Door", VehiclePage.FinanceType.Owned, VehiclePage.Use.Commute);
+
+            var DayNumbers = vehicle.dayStrings;
+
+            Assert.AreEqual("1", DayNumbers[0]);
+            Assert.AreEqual("2", DayNumbers[1]);
+            Assert.AreEqual("3", DayNumbers[2]);
+            Assert.AreEqual("4", DayNumbers[3]);
+            Assert.AreEqual("5", DayNumbers[4]);
+            Assert.AreEqual("6", DayNumbers[5]);
+            Assert.AreEqual("7", DayNumbers[6]);
+
+            Assert.AreEqual(7, DayNumbers.Count);
+
+
             Assert.IsTrue(DidItWork);
 
         }
@@ -121,7 +137,7 @@ namespace UnitTestProject1
         public void Teardown()
         {
             //run something once after each test
-         //  driver.Quit();
+           driver.Quit();
         }
 
 

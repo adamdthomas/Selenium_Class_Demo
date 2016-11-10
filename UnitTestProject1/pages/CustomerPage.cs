@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using System;
-
+using System.Collections.Generic;
 
 namespace UnitTestProject1.pages
 {
@@ -69,6 +69,9 @@ namespace UnitTestProject1.pages
 
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("firstName")));
 
+            //Example of retreiving a collection of elements
+
+
             firstNameEdit.SendKeys("Adam");
             lastNameEdit.SendKeys("Thomas");
             streetAddressEdit.SendKeys("7025 Albert Pick Rd");
@@ -81,8 +84,23 @@ namespace UnitTestProject1.pages
 
             //System.Threading.Thread.Sleep(1000);
             effectiveDateEdit.SendKeys(TodaysDate);
-           // System.Threading.Thread.Sleep(2000);
+            // System.Threading.Thread.Sleep(2000);
+
+            //IList<IWebElement> editFields = driver.FindElements(By.TagName("input"));
+
+            //foreach (var field in editFields)
+            //{
+            //    var idIs = field.GetAttribute("id");
+            //    var valueIs = field.GetAttribute("value");
+
+            //}
+
+
+
             nextBtn.Click();
+
+
+
 
             try
             {
