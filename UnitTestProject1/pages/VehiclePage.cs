@@ -51,8 +51,10 @@ namespace UnitTestProject1.pages
         [FindsBy(How = How.Id, Using = "btnSubmit")] public IWebElement Submit { get; set; }
 
         //Commute
-        [FindsBy(How = How.Id, Using = "daysDriven")]
+        [FindsBy(How = How.Name, Using = "daysDriven")]
         public IWebElement daysDriven { get; set; }
+
+
         [FindsBy(How = How.Id, Using = "milesDriven")]
         public IWebElement milesDriven { get; set; }
 
@@ -72,19 +74,19 @@ namespace UnitTestProject1.pages
 
 
             SelectElement sltYear = new SelectElement(yearDrpDwn);
-            sltYear.SelectByText("2007");
+            sltYear.SelectByText(Year);
             System.Threading.Thread.Sleep(1500);
 
             SelectElement sltMake = new SelectElement(makeDrpDwn);
-            sltMake.SelectByText("Honda");
+            sltMake.SelectByText(Make);
             System.Threading.Thread.Sleep(1500);
 
             SelectElement sltModel = new SelectElement(modelDrpDwn);
-            sltModel.SelectByText("Accord");
+            sltModel.SelectByText(Model);
             System.Threading.Thread.Sleep(1500);
 
             SelectElement sltBody = new SelectElement(bodyDrpDwn);
-            sltBody.SelectByText("Sedan 4 Door");
+            sltBody.SelectByText(BodyType);
             System.Threading.Thread.Sleep(1500);
 
 
@@ -112,22 +114,32 @@ namespace UnitTestProject1.pages
             {
                 case Use.Commute:
                     Commute.Click();
+                    System.Threading.Thread.Sleep(1000);
 
-                    daysDrivenSlt = new SelectElement(daysDriven);
-
-                    daysDrivenSlt.SelectByText("5");
+                    daysDrivenSlt = new SelectElement(driver.FindElement(By.Id("daysDriven")));
+                    IList <IWebElement> days = daysDrivenSlt.Options;
+                    daysDrivenSlt.SelectByValue("5");
                     milesDriven.SendKeys("15");
 
                     annualMileageSlt = new SelectElement(annualMileage);
                     annualMileageSlt.SelectByText("12,001 - 15,000");
+
+                    
+                    
                     break;
                 case Use.Pleasure:
                     Pleasure.Click();
+                    System.Threading.Thread.Sleep(1000);
+
                     annualMileageSlt = new SelectElement(annualMileage);
+
+                    IList<IWebElement> miles = annualMileageSlt.Options;
                     annualMileageSlt.SelectByText("12,001 - 15,000");
                     break;
                 case Use.Business:
                     Business.Click();
+                    System.Threading.Thread.Sleep(1000);
+
                     businessUseSlt = new SelectElement(typeOfBusiness);
                     businessUseSlt.SelectByText("Clergy");
                     annualMileageSlt = new SelectElement(annualMileage);
