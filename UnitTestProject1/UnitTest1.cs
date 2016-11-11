@@ -7,7 +7,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using UnitTestProject1.pages;
 using UnitTestProject1.utilities;
-
+using OpenQA.Selenium.PhantomJS;
 
 namespace UnitTestProject1
 {
@@ -29,6 +29,12 @@ namespace UnitTestProject1
         public void Setup()
         {
             //Runs once before every test
+
+            //var driverService = PhantomJSDriverService.CreateDefaultService();
+            //driverService.HideCommandPromptWindow = true;
+            //driverService.IgnoreSslErrors = true;
+            //driver = new PhantomJSDriver(driverService);
+
 
             driver = new ChromeDriver();
             driver.Navigate().GoToUrl("https://auto-buy-gz-user1.geico.com/");
@@ -82,10 +88,6 @@ namespace UnitTestProject1
 
 
             //Assert.IsTrue(FirstLink.Contains(SearchTerm));
-
-
-
-
         }
 
         //[Test]
@@ -94,7 +96,6 @@ namespace UnitTestProject1
         //[TestCase("Gary", "Frankfurtinstien", "7025 Albert Pick Rd", "27409", "01", "02", "1940")]
         //[TestCase("Perry", "Trump", "7025 Albert Pick Rd", "27411", "01", "02", "1930")]
         //[TestCase("Brook", "Clinton", "7025 Albert Pick Rd", "27409", "01", "02", "1920")]
-
         public void TestCustomerForm(string FirstName, string LastName, string Address, string ZipCode, string DOBMonth, string DOBDay, string DOBYear)
         {
 
