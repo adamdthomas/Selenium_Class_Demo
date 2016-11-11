@@ -6,6 +6,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using UnitTestProject1.pages;
+using UnitTestProject1.utilities;
 
 
 namespace UnitTestProject1
@@ -117,20 +118,17 @@ namespace UnitTestProject1
 
             var DayNumbers = vehicle.dayStrings;
 
-            Assert.AreEqual("1", DayNumbers[0]);
-            Assert.AreEqual("2", DayNumbers[1]);
-            Assert.AreEqual("3", DayNumbers[2]);
-            Assert.AreEqual("4", DayNumbers[3]);
-            Assert.AreEqual("5", DayNumbers[4]);
-            Assert.AreEqual("6", DayNumbers[5]);
-            Assert.AreEqual("7", DayNumbers[6]);
-
-            Assert.AreEqual(7, DayNumbers.Count);
-
-
-            Assert.IsTrue(DidItWork);
-
-        }
+            AssertAll.Succeed(
+            () => Assert.AreEqual("1", DayNumbers[0]),
+            () => Assert.AreEqual("2", DayNumbers[1]),
+            () => Assert.AreEqual("3", DayNumbers[2]),
+            () => Assert.AreEqual("4", DayNumbers[3]),
+            () => Assert.AreEqual("5", DayNumbers[4]),
+            () => Assert.AreEqual("6", DayNumbers[5]),
+            () => Assert.AreEqual("7", DayNumbers[6]),
+            () => Assert.AreEqual(7, DayNumbers.Count));
+            
+           }
 
 
         [TearDown]
