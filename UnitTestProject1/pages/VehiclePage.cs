@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTestProject1.utilities;
 
 namespace UnitTestProject1.pages
 {
@@ -15,6 +16,7 @@ namespace UnitTestProject1.pages
         WebDriverWait wait;
         IWebDriver driver;
         public List<string> dayStrings;
+
 
         public enum FinanceType
         {
@@ -62,22 +64,24 @@ namespace UnitTestProject1.pages
             dayStrings = new List<string>();
             bool driverInfoPageExist;
 
-
-            SelectElement sltYear = new SelectElement(yearDrpDwn);
+            SelectElement sltYear = driver.FindSelectElementWhenPopulated(By.Id("vehicleYear"), 30);
             sltYear.SelectByText(Year);
-            System.Threading.Thread.Sleep(1500);
 
-            SelectElement sltMake = new SelectElement(makeDrpDwn);
+            SelectElement sltMake = driver.FindSelectElementWhenPopulated(By.Id("vehicleMake"), 30);
             sltMake.SelectByText(Make);
-            System.Threading.Thread.Sleep(2000);
 
-            SelectElement sltModel = new SelectElement(modelDrpDwn);
+            SelectElement sltModel = driver.FindSelectElementWhenPopulated(By.Id("vehicleModel"), 30);
             sltModel.SelectByText(Model);
-            System.Threading.Thread.Sleep(2000);
 
-            SelectElement sltBody = new SelectElement(bodyDrpDwn);
-            sltBody.SelectByText(BodyType);
-            System.Threading.Thread.Sleep(1500);
+            try
+            {
+                SelectElement sltBody = driver.FindSelectElementWhenPopulated(By.Id("bodyStyles"), 30);
+                sltBody.SelectByText(BodyType);
+            }
+            catch (Exception) {}
+
+
+            System.Threading.Thread.Sleep(500);
 
 
             switch (FinanceType)
@@ -104,21 +108,21 @@ namespace UnitTestProject1.pages
             {
                 case Use.Commute:
                     Commute.Click();
-                    System.Threading.Thread.Sleep(3000);
+                    //System.Threading.Thread.Sleep(3000);
 
-                    daysDrivenSlt = new SelectElement(driver.FindElement(By.Id("daysDriven")));
+                    daysDrivenSlt = driver.FindSelectElementWhenPopulated(By.Id("daysDriven"), 30);
                     IList<IWebElement> days; days = daysDrivenSlt.Options;
                     foreach (var day in days)
                     {
                         dayStrings.Add(day.GetAttribute("value").ToString());
                     }
 
-
+ 
 
                     daysDrivenSlt.SelectByValue("5");
                     milesDriven.SendKeys("15");
 
-                    annualMileageSlt = new SelectElement(annualMileage);
+                    annualMileageSlt = driver.FindSelectElementWhenPopulated(By.Id("annualMileage"), 30);
                     annualMileageSlt.SelectByText("12,001 - 15,000");
 
                     
@@ -126,20 +130,19 @@ namespace UnitTestProject1.pages
                     break;
                 case Use.Pleasure:
                     Pleasure.Click();
-                    System.Threading.Thread.Sleep(1000);
 
-                    annualMileageSlt = new SelectElement(annualMileage);
+
+                    annualMileageSlt = driver.FindSelectElementWhenPopulated(By.Id("annualMileage"), 30);
 
                     IList<IWebElement> miles = annualMileageSlt.Options;
                     annualMileageSlt.SelectByText("12,001 - 15,000");
                     break;
                 case Use.Business:
                     Business.Click();
-                    System.Threading.Thread.Sleep(1000);
 
-                    businessUseSlt = new SelectElement(typeOfBusiness);
+                    businessUseSlt = driver.FindSelectElementWhenPopulated(By.Id("typeOfBusinessUse"), 30);
                     businessUseSlt.SelectByText("Clergy");
-                    annualMileageSlt = new SelectElement(annualMileage);
+                    annualMileageSlt = driver.FindSelectElementWhenPopulated(By.Id("annualMileage"), 30);
                     annualMileageSlt.SelectByText("12,001 - 15,000");
                     break;
                 default:

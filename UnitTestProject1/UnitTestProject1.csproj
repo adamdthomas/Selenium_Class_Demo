@@ -70,6 +70,7 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utilities\AssertAll.cs" />
+    <Compile Include="utilities\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

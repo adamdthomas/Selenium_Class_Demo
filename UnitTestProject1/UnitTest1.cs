@@ -8,6 +8,7 @@ using OpenQA.Selenium.Support.UI;
 using UnitTestProject1.pages;
 using UnitTestProject1.utilities;
 using OpenQA.Selenium.PhantomJS;
+using OpenQA.Selenium.Remote;
 
 namespace UnitTestProject1
 {
@@ -18,6 +19,7 @@ namespace UnitTestProject1
         WebDriverWait wait;
         CustomerPage customer;
         VehiclePage vehicle;
+        //RemoteWebDriver driver;
 
         [OneTimeSetUp]
         public void TestFixtureSetUp()
@@ -34,6 +36,14 @@ namespace UnitTestProject1
             //driverService.HideCommandPromptWindow = true;
             //driverService.IgnoreSslErrors = true;
             //driver = new PhantomJSDriver(driverService);
+
+            
+         //   DesiredCapabilities capability = DesiredCapabilities.Firefox();
+         //   capability.SetCapability("platform", "WIN10");
+         //   capability.SetCapability("version", "46");
+         //driver = new RemoteWebDriver(
+         //     new Uri("http://127.0.0.1:4444/wd/hub/"), capability, TimeSpan.FromSeconds(600));
+
 
 
             driver = new ChromeDriver();
@@ -119,8 +129,10 @@ namespace UnitTestProject1
 
             var DayNumbers = vehicle.dayStrings;
 
+            
+
             AssertAll.Succeed(
-            () => Assert.AreEqual("1", DayNumbers[0]),
+            () => Assert.AreEqual("1", DayNumbers[0], "MORE DETAILS PLEASE!!"),
             () => Assert.AreEqual("2", DayNumbers[1]),
             () => Assert.AreEqual("3", DayNumbers[2]),
             () => Assert.AreEqual("4", DayNumbers[3]),
